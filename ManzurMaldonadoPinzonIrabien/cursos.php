@@ -160,6 +160,10 @@ $sesion = $_SESSION['nombre_s'];
         </div>
     </footer>
 
+    <script>
+        // Variable para verificar si el usuario está loggeado
+        const usuarioLoggeado = <?php echo $sesion ? 'true' : 'false'; ?>;
+    </script>
     <script src="script.js"></script>
     <script src="cursos.js"></script>
 

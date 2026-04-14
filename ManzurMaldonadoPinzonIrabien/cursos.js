@@ -127,8 +127,13 @@ function openModal(courseId) {
     // Mostrar el modal
     document.getElementById('courseModal').classList.add('active');
 
-    // Asignar la alerta al botón de inscripción
-    document.getElementById('inscribirseBtn').onclick = () => {
+    // Asignar evento al botón de inscripción
+    const inscribirseBtn = document.getElementById('inscribirseBtn');
+    inscribirseBtn.onclick = () => {
+        if (!usuarioLoggeado) {
+            alert('Debes iniciar sesión para inscribirte a un curso');
+            return;
+        }
         alert('¡Inscrito!');
         closeModal(); // Cierra el modal después de mostrar la alerta
     };
