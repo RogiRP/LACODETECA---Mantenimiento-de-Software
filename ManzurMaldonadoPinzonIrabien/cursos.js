@@ -106,6 +106,54 @@ function displayCourses(filterCategory = 'all') {
     });
 }
 
+// Variable para controlar si una notificación está activa
+let toastActive = false;
+
+// Función para mostrar notificación Toast
+function showToast(message, duration = 5000) {
+    // Evitar múltiples toasts superpuestos
+    if (toastActive) return;
+    toastActive = true;
+
+    // Crear el contenedor del toast
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    
+    toast.innerHTML = `
+        <div class="toast-content">
+            <span class="toast-icon">✓</span>
+            <span>${message}</span>
+        </div>
+        <button class="toast-close" aria-label="Cerrar notificación">×</button>
+    `;
+
+    // Agregar el toast al DOM
+    document.body.appendChild(toast);
+
+    // Evento para cerrar el toast manualmente
+    const closeButton = toast.querySelector('.toast-close');
+    closeButton.addEventListener('click', () => {
+        removeToast(toast);
+    });
+
+    // Remover automáticamente después de la duración
+    const timeout = setTimeout(() => {
+        removeToast(toast);
+    }, duration);
+
+    // Función para remover el toast
+    function removeToast(toastElement) {
+        clearTimeout(timeout);
+        toastElement.classList.add('removing');
+        
+        // Esperar a que termine la animación
+        setTimeout(() => {
+            toastElement.remove();
+            toastActive = false;
+        }, 300); // Duración de la animación
+    }
+}
+
 // Función para abrir el modal
 function openModal(courseId) {
     const course = courses.find(c => c.id === courseId);
@@ -131,11 +179,11 @@ function openModal(courseId) {
     const inscribirseBtn = document.getElementById('inscribirseBtn');
     inscribirseBtn.onclick = () => {
         if (!usuarioLoggeado) {
-            alert('Debes iniciar sesión para inscribirte a un curso');
+            showToast('Debes iniciar sesión para inscribirte a un curso', 4000);
             return;
         }
-        alert('¡Inscrito!');
-        closeModal(); // Cierra el modal después de mostrar la alerta
+        showToast(`¡Inscrito exitosamente al curso: ${course.title}!`, 5000);
+        closeModal(); // Cierra el modal después de mostrar el toast
     };
 }
 

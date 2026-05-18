@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost:3306';
 $usuario = 'root';
-$contrasenia = '';
+$contrasenia = 'BlackRonin9.';
 $baseDeDatos = 'registros_php_db1';
 
 // Crear conexión
